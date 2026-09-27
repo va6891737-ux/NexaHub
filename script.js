@@ -1,501 +1,1455 @@
-function openWebsite(url) {
-    window.open(url, "_blank");
-}
+// ==========================================
+// NEXAHUB GAME CENTER - FULL SCRIPT
+// ==========================================
+
+const title = document.getElementById("game-title");
+const content = document.getElementById("game-content");
 
 
-function scrollToTools() {
-    document.getElementById("tools").scrollIntoView({
-        behavior: "smooth"
-    });
-}
+// ==========================================
+// GLOBAL VARIABLES
+// ==========================================
+
+let ticBoard = ["", "", "", "", "", "", "", ""];
+let ticPlayer = "X";
+
+let secretNumber = 0;
+let guessAttempts = 0;
+
+let memoryCards = [];
+let memoryOpen = [];
+let memoryMatched = [];
+
+let quizIndex = 0;
+let quizScore = 0;
+
+let snake = [];
+let snakeDirection = "right";
+let snakeFood = {};
+let snakeTimer = null;
+
+let speedClicks = 0;
+let speedTimer = null;
+let speedStarted = false;
+
+let secretWord = "";
+let wordAttempts = 0;
+
+let carPosition = 50;
+let raceScore = 0;
+
+let pongScore = 0;
 
 
-function openCalculator() {
+// ==========================================
+// SHOW GAME
+// ==========================================
 
-    const calculator = document.getElementById("calculator");
+function showGame(game) {
 
-    calculator.style.display = "block";
+    if (!title || !content) return;
 
-    calculator.scrollIntoView({
-        behavior: "smooth"
-    });
-}
-
-
-function addValue(value) {
-
-    document.getElementById("display").value += value;
-}
+    content.innerHTML = "";
+    title.innerText = "Select a Game 🎮";
 
 
-function clearDisplay() {
+    // ======================================
+    // TIC TAC TOE
+    // ======================================
 
-    document.getElementById("display").value = "";
-}
+    if (game === "tic") {
 
+        ticBoard = ["", "", "", "", "", "", "", ""];
+        ticPlayer = "X";
 
-function deleteLast() {
+        title.innerText = "❌⭕ Tic-Tac-Toe";
 
-    const display = document.getElementById("display");
+        content.innerHTML = `
+            <h3>Player X Turn</h3>
 
-    display.value = display.value.slice(0, -1);
-}
+            <div class="tic-board">
+                ${ticBoard.map((_, i) =>
+                    `<button onclick="ticMove(${i})" id="tic${i}"></button>`
+                ).join("")}
+            </div>
 
-
-function calculate() {
-
-    const display = document.getElementById("display");
-
-    try {
-
-        display.value = eval(display.value);
-
-    } catch {
-
-        display.value = "Error";
-
-    }
-}
-
-
-function openGames() {
-    alert("Games will be added next.");
-}
-
-
-function openFiles() {
-    alert("Files section will be added next.");
-}
-
-
-function openNotes() {
-    alert("Notes section will be added next.");
-}
-function openFiles() {
-
-    const filesSection =
-        document.getElementById("files");
-
-    filesSection.scrollIntoView({
-        behavior: "smooth"
-    });
-
-}
-
-
-let selectedFiles = [];
-
-function showFiles() {
-
-    const input = document.getElementById("fileInput");
-
-    selectedFiles = Array.from(input.files);
-
-    displayFiles(selectedFiles);
-}
-
-
-function displayFiles(files) {
-
-    const fileList =
-        document.getElementById("fileList");
-
-    fileList.innerHTML = "";
-
-    if (files.length === 0) {
-
-        fileList.innerHTML =
-            "<p>No files selected.</p>";
+            <button class="game-btn" onclick="resetTic()">
+                🔄 Restart
+            </button>
+        `;
 
         return;
     }
 
-    files.forEach((file, index) => {
 
-        const fileItem =
-            document.createElement("div");
+    // ======================================
+    // ROCK PAPER SCISSORS
+    // ======================================
 
-        fileItem.className = "file-item";
+    if (game === "rps") {
 
-        fileItem.innerHTML = `
+        title.innerText = "✊✋✌️ Rock Paper Scissors";
 
-            <div>
-                <strong>📄 ${file.name}</strong>
+        content.innerHTML = `
+            <h3>Choose Your Move</h3>
 
-                <small>
-                    ${(file.size / 1024).toFixed(2)} KB
-                </small>
+            <button class="game-btn" onclick="playRPS('rock')">
+                ✊ Rock
+            </button>
+
+            <button class="game-btn" onclick="playRPS('paper')">
+                ✋ Paper
+            </button>
+
+            <button class="game-btn" onclick="playRPS('scissors')">
+                ✌️ Scissors
+            </button>
+
+            <div id="rps-result">
+                Choose a move!
             </div>
-
-            <div>
-
-                <button
-                    onclick="downloadFile(${index})">
-                    ⬇️
-                </button>
-
-                <button
-                    onclick="deleteFile(${index})">
-                    🗑️
-                </button>
-
-            </div>
-
         `;
 
-        fileList.appendChild(fileItem);
+        return;
+    }
 
-    });
+
+    // ======================================
+    // NUMBER GUESSING
+    // ======================================
+
+    if (game === "guess") {
+
+        secretNumber = Math.floor(Math.random() * 100) + 1;
+        guessAttempts = 0;
+
+        title.innerText = "🔢 Number Guessing";
+
+        content.innerHTML = `
+            <div class="number-game">
+
+                <div class="number-icon">🔢</div>
+
+                <h3>Guess the Number</h3>
+
+                <p class="game-description">
+                    Guess a number between 1 and 100
+                </p>
+
+                <input
+                    type="number"
+                    id="guessInput"
+                    class="game-input"
+                    placeholder="Enter number"
+                    min="1"
+                    max="100"
+                >
+
+                <br>
+
+                <button class="game-btn" onclick="checkGuess()">
+                    🎯 Check
+                </button>
+
+                <div id="guessResult" class="guess-result">
+                    Start guessing!
+                </div>
+
+                <div class="guess-info">
+                    <span>🎯 Range: 1 - 100</span>
+                    <span>🔄 Attempts: <b id="guessAttempts">0</b></span>
+                </div>
+
+                <button class="game-btn restart-btn"
+                    onclick="showGame('guess')">
+                    🔄 Restart
+                </button>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // MEMORY GAME
+    // ======================================
+
+    if (game === "memory") {
+
+        memoryCards = [
+            "🍎", "🍎",
+            "🍌", "🍌",
+            "🍇", "🍇",
+            "🍉", "🍉"
+        ];
+
+        memoryCards.sort(() => Math.random() - 0.5);
+
+        memoryOpen = [];
+        memoryMatched = [];
+
+        title.innerText = "🧠 Memory Game";
+
+        content.innerHTML = `
+            <h3>Find Matching Pairs</h3>
+
+            <div class="memory-board">
+
+                ${memoryCards.map((_, i) =>
+                    `<button onclick="memoryClick(${i})"
+                    id="memory${i}">❓</button>`
+                ).join("")}
+
+            </div>
+
+            <button class="game-btn"
+                onclick="showGame('memory')">
+                🔄 Restart
+            </button>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // QUIZ GAME
+    // ======================================
+
+    if (game === "quiz") {
+
+        quizIndex = 0;
+        quizScore = 0;
+
+        title.innerText = "🧩 Quiz Game";
+
+        showQuizQuestion();
+
+        return;
+    }
+
+
+    // ======================================
+    // SNAKE GAME
+    // ======================================
+
+    if (game === "snake") {
+
+        title.innerText = "🐍 Snake Game";
+
+        content.innerHTML = `
+            <h3>🐍 Snake</h3>
+
+            <canvas id="snakeCanvas"
+                width="400"
+                height="400">
+            </canvas>
+
+            <br>
+
+            <button class="game-btn"
+                onclick="startSnake()">
+                ▶️ Start Snake
+            </button>
+
+            <p class="pong-hint">
+                Use Arrow Keys ⬆️⬇️⬅️➡️
+            </p>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // CLICK SPEED
+    // ======================================
+
+    if (game === "speed") {
+
+        speedClicks = 0;
+        speedStarted = false;
+
+        title.innerText = "⚡ Click Speed";
+
+        content.innerHTML = `
+            <div class="speed-game">
+
+                <div class="speed-icon">⚡</div>
+
+                <h3>Click Speed Test</h3>
+
+                <div class="click-counter">
+
+                    <span id="clickCount">0</span>
+
+                    <small>CLICKS</small>
+
+                </div>
+
+                <button
+                    class="click-me-button"
+                    onclick="speedClick()">
+
+                    CLICK ME!
+
+                </button>
+
+                <p class="speed-hint">
+                    You have 10 seconds!
+                </p>
+
+                <p id="speedResult"></p>
+
+                <button class="game-btn"
+                    onclick="showGame('speed')">
+
+                    🔄 Restart
+
+                </button>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // WORD GUESSING
+    // ======================================
+
+    if (game === "word") {
+
+        const words = [
+            "computer",
+            "javascript",
+            "website",
+            "programming",
+            "technology"
+        ];
+
+        secretWord =
+            words[Math.floor(Math.random() * words.length)];
+
+        wordAttempts = 0;
+
+        title.innerText = "🔤 Word Guessing";
+
+        content.innerHTML = `
+            <h3>🔤 Guess the Word</h3>
+
+            <p>
+                Hint: It is related to technology 💻
+            </p>
+
+            <input
+                type="text"
+                id="wordInput"
+                class="game-input"
+                placeholder="Enter word"
+            >
+
+            <br>
+
+            <button class="game-btn"
+                onclick="checkWord()">
+
+                🎯 Guess
+
+            </button>
+
+            <div id="wordResult"
+                class="guess-result">
+
+                Start guessing!
+
+            </div>
+
+            <button class="game-btn"
+                onclick="showGame('word')">
+
+                🔄 Restart
+
+            </button>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // BRICK BREAKER
+    // ======================================
+
+    if (game === "brick") {
+
+        title.innerText = "🧱 Brick Breaker";
+
+        content.innerHTML = `
+            <h3>🧱 Brick Breaker</h3>
+
+            <canvas
+                id="brickCanvas"
+                width="500"
+                height="400">
+            </canvas>
+
+            <br>
+
+            <button class="game-btn"
+                onclick="startBrickBreaker()">
+
+                ▶️ Start Game
+
+            </button>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // CAR RACING
+    // ======================================
+
+    if (game === "racing") {
+
+        carPosition = 50;
+        raceScore = 0;
+
+        title.innerText = "🏎️ Car Racing";
+
+        content.innerHTML = `
+            <div class="racing-game">
+
+                <h3>🏁 Highway Racing</h3>
+
+                <div class="race-score">
+                    🏆 Score:
+                    <span id="raceScore">0</span>
+                </div>
+
+                <div class="race-track">
+
+                    <div id="car">🏎️</div>
+
+                    <div id="obstacle">🚧</div>
+
+                </div>
+
+                <div class="race-controls">
+
+                    <button class="game-btn"
+                        onclick="moveCar('left')">
+
+                        ⬅️ LEFT
+
+                    </button>
+
+                    <button class="game-btn"
+                        onclick="moveCar('right')">
+
+                        RIGHT ➡️
+
+                    </button>
+
+                </div>
+
+                <p class="race-hint">
+                    🏎️ Move your car and avoid the obstacle!
+                </p>
+
+                <button class="game-btn restart-btn"
+                    onclick="showGame('racing')">
+
+                    🔄 RESTART RACE
+
+                </button>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // PING PONG
+    // ======================================
+
+    if (game === "pong") {
+
+        pongScore = 0;
+
+        title.innerText = "🏓 Ping Pong";
+
+        content.innerHTML = `
+            <div class="pong-game">
+
+                <h3>🏓 Ping Pong Challenge</h3>
+
+                <div class="pong-score">
+                    🏆 Score:
+                    <span id="pongScore">0</span>
+                </div>
+
+                <div class="pong-area">
+
+                    <div class="pong-paddle"></div>
+
+                    <div id="pongBall">
+                        ⚪
+                    </div>
+
+                </div>
+
+                <button class="game-btn"
+                    onclick="pongHit()">
+
+                    🏓 HIT BALL
+
+                </button>
+
+                <p class="pong-hint">
+                    🎯 Hit the ball and increase your score!
+                </p>
+
+                <button class="game-btn restart-btn"
+                    onclick="showGame('pong')">
+
+                    🔄 RESTART
+
+                </button>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // ======================================
+    // DICE GAME
+    // ======================================
+
+    if (game === "dice") {
+
+        title.innerText = "🎲 Dice Game";
+
+        content.innerHTML = `
+            <h3>🎲 Roll the Dice</h3>
+
+            <div id="dice">
+                🎲
+            </div>
+
+            <button class="game-btn"
+                onclick="rollDice()">
+
+                🎲 ROLL DICE
+
+            </button>
+
+            <p id="diceResult">
+                Roll the dice!
+            </p>
+        `;
+
+        return;
+    }
 }
 
 
-function deleteFile(index) {
+// ==========================================
+// TIC TAC TOE FUNCTIONS
+// ==========================================
 
-    selectedFiles.splice(index, 1);
+function ticMove(index) {
 
-    displayFiles(selectedFiles);
+    if (ticBoard[index] !== "") return;
+
+    ticBoard[index] = ticPlayer;
+
+    const cell = document.getElementById("tic" + index);
+
+    if (cell) {
+        cell.innerText = ticPlayer;
+    }
+
+    if (checkTicWinner()) {
+
+        alert("🎉 Player " + ticPlayer + " Wins!");
+
+        return;
+    }
+
+    if (!ticBoard.includes("")) {
+
+        alert("🤝 Draw!");
+
+        return;
+    }
+
+    ticPlayer = ticPlayer === "X" ? "O" : "X";
+
+    const turn = document.querySelector(".game-area h3");
+
+    if (turn) {
+        turn.innerText =
+            "Player " + ticPlayer + " Turn";
+    }
 }
 
 
-function downloadFile(index) {
+function checkTicWinner() {
 
-    const file = selectedFiles[index];
+    const wins = [
 
-    const url =
-        URL.createObjectURL(file);
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
 
-    const link =
-        document.createElement("a");
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
 
-    link.href = url;
+        [0,4,8],
+        [2,4,6]
 
-    link.download = file.name;
+    ];
 
-    link.click();
+    return wins.some(combo => {
 
-    URL.revokeObjectURL(url);
-}
+        const [a,b,c] = combo;
 
-
-function filterFiles() {
-
-    const search =
-        document
-        .getElementById("fileSearch")
-        .value
-        .toLowerCase();
-
-    const filtered =
-        selectedFiles.filter(file =>
-            file.name.toLowerCase().includes(search)
+        return (
+            ticBoard[a] &&
+            ticBoard[a] === ticBoard[b] &&
+            ticBoard[a] === ticBoard[c]
         );
-
-    displayFiles(filtered);
-}
-function openFiles() {
-
-    const filesSection =
-        document.getElementById("files");
-
-    filesSection.scrollIntoView({
-        behavior: "smooth"
     });
-
 }
 
 
-function showFiles() {
+function resetTic() {
+    showGame("tic");
+}
+
+
+// ==========================================
+// ROCK PAPER SCISSORS
+// ==========================================
+
+function playRPS(player) {
+
+    const choices = [
+        "rock",
+        "paper",
+        "scissors"
+    ];
+
+    const computer =
+        choices[Math.floor(Math.random() * 3)];
+
+    let result = "";
+
+    if (player === computer) {
+
+        result = "🤝 Draw!";
+
+    } else if (
+
+        (player === "rock" && computer === "scissors") ||
+        (player === "paper" && computer === "rock") ||
+        (player === "scissors" && computer === "paper")
+
+    ) {
+
+        result = "🎉 You Win!";
+
+    } else {
+
+        result = "😅 Computer Wins!";
+
+    }
+
+    const resultBox =
+        document.getElementById("rps-result");
+
+    if (resultBox) {
+
+        resultBox.innerText =
+            `You: ${player} | Computer: ${computer} | ${result}`;
+    }
+}
+
+
+// ==========================================
+// NUMBER GUESSING
+// ==========================================
+
+function checkGuess() {
 
     const input =
-        document.getElementById("fileInput");
+        document.getElementById("guessInput");
 
-    const fileList =
-        document.getElementById("fileList");
+    const result =
+        document.getElementById("guessResult");
 
-    fileList.innerHTML = "";
+    const attempts =
+        document.getElementById("guessAttempts");
 
-    for (const file of input.files) {
+    if (!input || !result) return;
 
-        const fileItem =
-            document.createElement("div");
+    const guess = Number(input.value);
 
-        fileItem.className = "file-item";
+    if (
+        guess < 1 ||
+        guess > 100 ||
+        !guess
+    ) {
 
-        fileItem.innerHTML = `
-            <span>📄 ${file.name}</span>
-            <small>
-                ${(file.size / 1024).toFixed(2)} KB
-            </small>
+        result.innerText =
+            "⚠️ Enter a number between 1 and 100.";
+
+        return;
+    }
+
+    guessAttempts++;
+
+    if (attempts) {
+        attempts.innerText = guessAttempts;
+    }
+
+    if (guess === secretNumber) {
+
+        result.innerText =
+            `🎉 Correct! You guessed it in ${guessAttempts} attempts!`;
+
+    } else if (guess < secretNumber) {
+
+        result.innerText =
+            "⬆️ Too Low! Try again.";
+
+    } else {
+
+        result.innerText =
+            "⬇️ Too High! Try again.";
+    }
+
+    input.value = "";
+}
+
+
+// ==========================================
+// MEMORY GAME
+// ==========================================
+
+function memoryClick(index) {
+
+    if (
+        memoryOpen.length >= 2 ||
+        memoryMatched.includes(index) ||
+        memoryOpen.includes(index)
+    ) return;
+
+    memoryOpen.push(index);
+
+    const button =
+        document.getElementById("memory" + index);
+
+    if (button) {
+        button.innerText = memoryCards[index];
+    }
+
+    if (memoryOpen.length === 2) {
+
+        const [a,b] = memoryOpen;
+
+        if (memoryCards[a] === memoryCards[b]) {
+
+            memoryMatched.push(a,b);
+            memoryOpen = [];
+
+            if (memoryMatched.length === memoryCards.length) {
+
+                setTimeout(() => {
+                    alert("🎉 You matched all cards!");
+                }, 200);
+            }
+
+        } else {
+
+            setTimeout(() => {
+
+                const first =
+                    document.getElementById("memory" + a);
+
+                const second =
+                    document.getElementById("memory" + b);
+
+                if (first) first.innerText = "❓";
+                if (second) second.innerText = "❓";
+
+                memoryOpen = [];
+
+            }, 700);
+        }
+    }
+}
+
+
+// ==========================================
+// QUIZ
+// ==========================================
+
+const quizQuestions = [
+
+    {
+        question: "What does HTML stand for?",
+        options: [
+            "Hyper Text Markup Language",
+            "High Text Machine Language",
+            "Hyper Tool Multi Language",
+            "Home Tool Markup Language"
+        ],
+        answer: 0
+    },
+
+    {
+        question: "Which language is used for styling websites?",
+        options: [
+            "HTML",
+            "CSS",
+            "Java",
+            "Python"
+        ],
+        answer: 1
+    },
+
+    {
+        question: "Which language is used for web interaction?",
+        options: [
+            "JavaScript",
+            "HTML",
+            "CSS",
+            "SQL"
+        ],
+        answer: 0
+    },
+
+    {
+        question: "What does CPU stand for?",
+        options: [
+            "Central Processing Unit",
+            "Computer Personal Unit",
+            "Central Program Utility",
+            "Control Processing User"
+        ],
+        answer: 0
+    }
+];
+
+
+function showQuizQuestion() {
+
+    if (quizIndex >= quizQuestions.length) {
+
+        content.innerHTML = `
+            <h3>🎉 Quiz Completed!</h3>
+
+            <h2>
+                Score:
+                ${quizScore}/${quizQuestions.length}
+            </h2>
+
+            <button class="game-btn"
+                onclick="showGame('quiz')">
+
+                🔄 Play Again
+
+            </button>
         `;
 
-        fileList.appendChild(fileItem);
+        return;
     }
 
+    const q = quizQuestions[quizIndex];
+
+    content.innerHTML = `
+
+        <h3>
+            Question ${quizIndex + 1}
+            / ${quizQuestions.length}
+        </h3>
+
+        <h2>${q.question}</h2>
+
+        <div class="quiz-options">
+
+            ${q.options.map((option, index) => `
+
+                <button
+                    class="game-btn"
+                    onclick="answerQuiz(${index})">
+
+                    ${option}
+
+                </button>
+
+            `).join("")}
+
+        </div>
+
+        <p>
+            Score: ${quizScore}
+        </p>
+    `;
+}
+
+
+function answerQuiz(index) {
+
+    if (
+        index ===
+        quizQuestions[quizIndex].answer
+    ) {
+
+        quizScore++;
+
+        alert("✅ Correct!");
+
+    } else {
+
+        alert("❌ Wrong!");
+
+    }
+
+    quizIndex++;
+
+    showQuizQuestion();
+}
+
+
+// ==========================================
+// CLICK SPEED
+// ==========================================
+
+function speedClick() {
+
+    const counter =
+        document.getElementById("clickCount");
+
+    const result =
+        document.getElementById("speedResult");
+
+    if (!speedStarted) {
+
+        speedStarted = true;
+        speedClicks = 0;
+
+        speedTimer = setTimeout(() => {
+
+            speedStarted = false;
+
+            if (result) {
+
+                result.innerText =
+                    `⚡ Time Over! You clicked ${speedClicks} times!`;
+            }
+
+        }, 10000);
+    }
+
+    if (speedStarted) {
+
+        speedClicks++;
+
+        if (counter) {
+            counter.innerText = speedClicks;
+        }
+    }
 }
 // ==========================================
-// NOTES
+// WORD GUESSING
 // ==========================================
 
-function saveNotes() {
+function checkWord() {
 
-    const notes = document.getElementById("notesArea");
+    const input =
+        document.getElementById("wordInput");
 
-    const status = document.getElementById("notesStatus");
+    const result =
+        document.getElementById("wordResult");
 
-    if (!notes) {
+    if (!input || !result) return;
+
+    const guess =
+        input.value.trim().toLowerCase();
+
+    if (!guess) {
+
+        result.innerText =
+            "⚠️ Enter a word.";
+
         return;
     }
 
-    localStorage.setItem("nexaHubNotes", notes.value);
+    wordAttempts++;
 
-    if (status) {
-        status.innerText = "✅ Notes saved successfully!";
+    if (guess === secretWord) {
+
+        result.innerText =
+            `🎉 Correct! You guessed it in ${wordAttempts} attempts!`;
+
+    } else {
+
+        result.innerText =
+            "❌ Wrong word. Try again!";
     }
+
+    input.value = "";
 }
 
 
-function clearNotes() {
+// ==========================================
+// SNAKE
+// ==========================================
 
-    const notes = document.getElementById("notesArea");
+function startSnake() {
 
-    const status = document.getElementById("notesStatus");
+    const canvas =
+        document.getElementById("snakeCanvas");
 
-    if (!notes) {
-        return;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    snake = [
+        {x:200,y:200},
+        {x:180,y:200},
+        {x:160,y:200}
+    ];
+
+    snakeDirection = "right";
+
+    createSnakeFood();
+
+    if (snakeTimer) {
+        clearInterval(snakeTimer);
     }
 
-    notes.value = "";
+    snakeTimer =
+        setInterval(() => {
 
-    localStorage.removeItem("nexaHubNotes");
+            drawSnake(ctx);
 
-    if (status) {
-        status.innerText = "🗑️ Notes cleared!";
-    }
+        }, 120);
 }
 
 
-window.addEventListener("DOMContentLoaded", function () {
+function createSnakeFood() {
 
-    const notes = document.getElementById("notesArea");
+    snakeFood = {
 
-    if (!notes) {
+        x:
+            Math.floor(Math.random() * 20) * 20,
+
+        y:
+            Math.floor(Math.random() * 20) * 20
+    };
+}
+
+
+function drawSnake(ctx) {
+
+    const head = {
+        x: snake[0].x,
+        y: snake[0].y
+    };
+
+    if (snakeDirection === "right")
+        head.x += 20;
+
+    if (snakeDirection === "left")
+        head.x -= 20;
+
+    if (snakeDirection === "up")
+        head.y -= 20;
+
+    if (snakeDirection === "down")
+        head.y += 20;
+
+    if (
+        head.x < 0 ||
+        head.x >= 400 ||
+        head.y < 0 ||
+        head.y >= 400
+    ) {
+
+        clearInterval(snakeTimer);
+
+        alert("💀 Game Over!");
+
         return;
     }
 
-    const savedNotes =
-        localStorage.getItem("nexaHubNotes");
+    snake.unshift(head);
 
-    if (savedNotes) {
-        notes.value = savedNotes;
+    if (
+        head.x === snakeFood.x &&
+        head.y === snakeFood.y
+    ) {
+
+        createSnakeFood();
+
+    } else {
+
+        snake.pop();
     }
 
+    ctx.clearRect(0,0,400,400);
+
+    ctx.fillStyle = "#22d3ee";
+
+    snake.forEach(part => {
+
+        ctx.fillRect(
+            part.x,
+            part.y,
+            18,
+            18
+        );
+    });
+
+    ctx.fillStyle = "#ef4444";
+
+    ctx.fillRect(
+        snakeFood.x,
+        snakeFood.y,
+        18,
+        18
+    );
+}
+
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "ArrowUp" &&
+        snakeDirection !== "down") {
+
+        snakeDirection = "up";
+
+    } else if (
+        event.key === "ArrowDown" &&
+        snakeDirection !== "up"
+    ) {
+
+        snakeDirection = "down";
+
+    } else if (
+        event.key === "ArrowLeft" &&
+        snakeDirection !== "right"
+    ) {
+
+        snakeDirection = "left";
+
+    } else if (
+        event.key === "ArrowRight" &&
+        snakeDirection !== "left"
+    ) {
+
+        snakeDirection = "right";
+    }
 });
 // ==========================================
-// NEXAHUB CALCULATOR
+// CAR RACING FUNCTION
 // ==========================================
 
-function addValue(value) {
+function moveCar(direction) {
 
-    const display = document.getElementById("display");
+    const car =
+        document.getElementById("car");
 
-    if (!display) return;
+    if (!car) return;
 
-    display.value += value;
-}
+    if (direction === "left") {
 
+        carPosition -= 10;
 
-// ==========================================
-// CLEAR
-// ==========================================
+    } else if (direction === "right") {
 
-function clearDisplay() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    display.value = "";
-}
-
-
-// ==========================================
-// DELETE LAST
-// ==========================================
-
-function deleteLast() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    display.value =
-        display.value.slice(0, -1);
-}
-
-
-// ==========================================
-// CALCULATE
-// ==========================================
-
-function calculate() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    const expression = display.value;
-
-    if (expression.trim() === "") {
-        return;
+        carPosition += 10;
     }
 
-    try {
+    if (carPosition < 10)
+        carPosition = 10;
 
-        // Allow only calculator characters
-        if (!/^[0-9+\-*/%.() ]+$/.test(expression)) {
+    if (carPosition > 90)
+        carPosition = 90;
 
-            display.value = "Error";
+    car.style.left =
+        carPosition + "%";
 
-            return;
+    raceScore++;
+
+    const score =
+        document.getElementById("raceScore");
+
+    if (score) {
+        score.innerText = raceScore;
+    }
+}
+
+
+// ==========================================
+// PING PONG FUNCTION
+// ==========================================
+
+function pongHit() {
+
+    const ball =
+        document.getElementById("pongBall");
+
+    const score =
+        document.getElementById("pongScore");
+
+    if (!ball) return;
+
+    pongScore++;
+
+    if (score) {
+        score.innerText = pongScore;
+    }
+
+    const randomX =
+        Math.floor(Math.random() * 220) - 110;
+
+    const randomY =
+        Math.floor(Math.random() * 180) - 90;
+
+    ball.style.transform =
+        `translate(${randomX}px, ${randomY}px)`;
+}
+
+
+// ==========================================
+// BRICK BREAKER
+// ==========================================
+
+function startBrickBreaker() {
+
+    const canvas =
+        document.getElementById("brickCanvas");
+
+    if (!canvas) return;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    let x = canvas.width / 2;
+    let y = canvas.height - 40;
+
+    let dx = 3;
+    let dy = -3;
+
+    let paddleX =
+        canvas.width / 2 - 50;
+
+    const paddleWidth = 100;
+    const paddleHeight = 10;
+
+    const rows = 4;
+    const cols = 7;
+
+    const bricks = [];
+
+    for (let r = 0; r < rows; r++) {
+
+        bricks[r] = [];
+
+        for (let c = 0; c < cols; c++) {
+
+            bricks[r][c] = {
+                x: c * 68 + 10,
+                y: r * 30 + 20,
+                active: true
+            };
         }
+    }
 
-        const result = Function(
-            "return " + expression
-        )();
+    document.onmousemove = function(event) {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        paddleX =
+            event.clientX -
+            rect.left -
+            paddleWidth / 2;
+    };
+
+
+    function draw() {
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        // Ball
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            8,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = "#22d3ee";
+
+        ctx.fill();
+
+        ctx.closePath();
+
+
+        // Paddle
+
+        ctx.fillStyle = "#8b5cf6";
+
+        ctx.fillRect(
+            paddleX,
+            canvas.height - 20,
+            paddleWidth,
+            paddleHeight
+        );
+
+
+        // Bricks
+
+        bricks.forEach(row => {
+
+            row.forEach(brick => {
+
+                if (!brick.active) return;
+
+                ctx.fillStyle = "#22d3ee";
+
+                ctx.fillRect(
+                    brick.x,
+                    brick.y,
+                    60,
+                    20
+                );
+            });
+        });
+
+
+        // Brick collision
+
+        bricks.forEach(row => {
+
+            row.forEach(brick => {
+
+                if (
+                    brick.active &&
+                    x > brick.x &&
+                    x < brick.x + 60 &&
+                    y > brick.y &&
+                    y < brick.y + 20
+                ) {
+
+                    brick.active = false;
+
+                    dy = -dy;
+                }
+            });
+        });
+
+
+        x += dx;
+        y += dy;
+
 
         if (
-            typeof result !== "number" ||
-            !Number.isFinite(result)
+            x < 8 ||
+            x > canvas.width - 8
         ) {
 
-            display.value = "Error";
-
-            return;
+            dx = -dx;
         }
 
-        display.value = result;
 
-    }
+        if (y < 8) {
 
-    catch (error) {
-
-        display.value = "Error";
-
-    }
-}
-function openCalculator() {
-    window.location.href = "calculator.html";
-}
-
-// ==========================================
-// NEXAHUB CALCULATOR
-// ==========================================
-
-function addValue(value) {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    display.value += value;
-}
-
-
-function clearDisplay() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    display.value = "";
-}
-
-
-function deleteLast() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    display.value =
-        display.value.slice(0, -1);
-}
-
-
-function calculate() {
-
-    const display = document.getElementById("display");
-
-    if (!display) return;
-
-    const expression = display.value;
-
-    if (expression.trim() === "") {
-        return;
-    }
-
-    try {
-
-        // Allow only calculator characters
-        if (!/^[0-9+\-*/%.() ]+$/.test(expression)) {
-
-            display.value = "Error";
-
-            return;
+            dy = -dy;
         }
 
-        const result =
-            Function("return " + expression)();
 
         if (
-            typeof result !== "number" ||
-            !Number.isFinite(result)
+            y > canvas.height - 30 &&
+            x > paddleX &&
+            x < paddleX + paddleWidth
         ) {
 
-            display.value = "Error";
+            dy = -dy;
+        }
+
+
+        if (y > canvas.height) {
+
+            alert("💥 Game Over!");
 
             return;
         }
 
-        display.value = result;
 
+        requestAnimationFrame(draw);
     }
-    catch (error) {
 
-        display.value = "Error";
+    draw();
+}
+// ==========================================
+// DICE GAME
+// ==========================================
 
+function rollDice() {
+
+    const dice =
+        document.getElementById("dice");
+
+    const result =
+        document.getElementById("diceResult");
+
+    const number =
+        Math.floor(Math.random() * 6) + 1;
+
+    const diceFaces = [
+        "⚀",
+        "⚁",
+        "⚂",
+        "⚃",
+        "⚄",
+        "⚅"
+    ];
+
+    if (dice) {
+
+        dice.innerText =
+            diceFaces[number - 1];
     }
-}
-// ===============================
-// NEXAHUB CALCULATOR
-// ===============================
 
-function calculatorValue(value) {
-    const display = document.getElementById("calculatorDisplay");
+    if (result) {
 
-    display.value += value;
-}
-
-function clearCalculator() {
-    document.getElementById("calculatorDisplay").value = "";
-}
-
-function deleteCalculator() {
-    const display = document.getElementById("calculatorDisplay");
-
-    display.value = display.value.slice(0, -1);
-}
-
-function calculateResult() {
-    const display = document.getElementById("calculatorDisplay");
-
-    try {
-        let expression = display.value;
-
-        expression = expression.replace(/%/g, "/100");
-
-        display.value = eval(expression);
-    } catch (error) {
-        display.value = "Error";
+        result.innerText =
+            `🎉 You rolled ${number}!`;
     }
 }
