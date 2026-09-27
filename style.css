@@ -1,27 +1,18 @@
-/* ==========================================
-   NEXAHUB - MAIN STYLE
-   ========================================== */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: Arial, sans-serif;
     background: #020617;
     color: white;
+    min-height: 100vh;
 }
 
 
-/* ==========================================
-   NAVBAR
-   ========================================== */
+/* NAVBAR */
 
 .navbar {
     height: 75px;
@@ -32,13 +23,13 @@ body {
 
     padding: 0 7%;
 
-    background: rgba(2, 6, 23, 0.96);
+    background: rgba(2, 6, 23, 0.95);
 
-    border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.25);
 
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .logo {
@@ -50,69 +41,64 @@ body {
     text-shadow: 0 0 15px #22d3ee;
 }
 
-.logo span {
-    color: #a78bfa;
-}
+.home-btn {
+    padding: 10px 20px;
 
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
+    color: white;
 
-.nav-links a {
-    color: #cbd5e1;
     text-decoration: none;
-    font-size: 16px;
-    transition: 0.25s;
+
+    border: 1px solid #22d3ee;
+
+    border-radius: 8px;
+
+    transition: 0.3s;
 }
 
-.nav-links a:hover {
-    color: #22d3ee;
+.home-btn:hover {
+    background: #22d3ee;
 
-    text-shadow:
-        0 0 10px #22d3ee;
+    color: #020617;
+
+    box-shadow: 0 0 20px #22d3ee;
 }
 
 
-/* ==========================================
-   HERO
-   ========================================== */
+/* HERO */
 
 .hero {
-    min-height: 650px;
+    min-height: 360px;
 
     display: flex;
     flex-direction: column;
 
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     text-align: center;
 
-    padding: 60px 20px;
+    padding: 50px 20px;
 
     background:
         radial-gradient(
             circle at center,
             rgba(37, 99, 235, 0.35),
-            transparent 55%
+            transparent 60%
         );
 }
 
-.small-title {
-    letter-spacing: 5px;
+.hero p {
+    color: #22d3ee;
+
+    letter-spacing: 4px;
 
     font-size: 14px;
 
-    color: #c4b5fd;
-
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .hero h1 {
-    font-size: clamp(70px, 12vw, 150px);
-
-    line-height: 1;
+    font-size: clamp(50px, 9vw, 100px);
 
     color: #22d3ee;
 
@@ -121,149 +107,71 @@ body {
         0 0 40px rgba(34, 211, 238, 0.5);
 }
 
-.hero h1 span {
-    color: #a78bfa;
-}
-
 .hero h2 {
-    margin-top: 30px;
-
-    font-size: 32px;
-}
-
-.description {
-    max-width: 650px;
-
-    margin: 20px auto;
+    margin-top: 20px;
 
     color: #cbd5e1;
 
-    line-height: 1.7;
-}
-
-.hero button {
-    margin-top: 25px;
-
-    padding: 15px 30px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #06b6d4,
-            #8b5cf6
-        );
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 0 20px rgba(34, 211, 238, 0.4);
-
-    transition: 0.3s;
-}
-
-.hero button:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 0 35px rgba(34, 211, 238, 0.7);
+    font-weight: normal;
 }
 
 
-/* ==========================================
-   TOOLS SECTION
-   ========================================== */
+/* GAMES */
 
-.tools-section {
-    padding: 100px 6%;
-
-    text-align: center;
+.games-section {
+    padding: 70px 7%;
 
     background: #030a1c;
 }
 
-.section-title {
-    color: #22d3ee;
-
-    letter-spacing: 4px;
-
-    font-size: 13px;
-}
-
-.tools-section > h2,
-.about h2 {
-    font-size: 40px;
-
-    margin: 15px 0 50px;
-}
-
-
-/* ==========================================
-   TOOL CARDS
-   3 CARDS PER ROW
-   ========================================== */
-
-.cards {
-    width: 100%;
-
+.games-grid {
     max-width: 1200px;
 
-    margin: 0 auto;
+    margin: auto;
 
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
-    gap: 30px;
+    gap: 25px;
 }
 
 
-/* ==========================================
-   CARD
-   ========================================== */
+/* GAME CARD */
 
-.card {
-    min-height: 230px;
+.game-card {
+    min-height: 210px;
 
-    padding: 45px 25px;
+    padding: 30px 20px;
 
     display: flex;
 
     flex-direction: column;
 
-    align-items: center;
-
     justify-content: center;
 
-    text-align: center;
+    align-items: center;
 
-    border-radius: 20px;
+    text-align: center;
 
     background:
         linear-gradient(
             145deg,
-            rgba(15, 23, 42, 0.98),
-            rgba(15, 23, 42, 0.75)
+            rgba(15, 23, 42, 0.95),
+            rgba(15, 23, 42, 0.65)
         );
 
     border: 1px solid rgba(34, 211, 238, 0.18);
+
+    border-radius: 18px;
 
     cursor: pointer;
 
     transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-8px);
+.game-card:hover {
+    transform: translateY(-10px);
 
     border-color: #22d3ee;
 
@@ -271,393 +179,53 @@ body {
         0 0 30px rgba(34, 211, 238, 0.3);
 }
 
-.icon {
-    font-size: 55px;
+.game-icon {
+    font-size: 50px;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
-.card h3 {
-    font-size: 23px;
+.game-card h3 {
+    font-size: 20px;
 
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
-.card p {
+.game-card p {
     color: #94a3b8;
 
-    font-size: 15px;
-
-    line-height: 1.6;
+    font-size: 14px;
 }
 
 
-/* ==========================================
-   CALCULATOR
-   ========================================== */
+/* GAME AREA */
 
-.calculator-box {
-    display: none;
-
-    max-width: 350px;
+.game-area {
+    max-width: 900px;
 
     margin: 50px auto;
 
-    padding: 25px;
-
-    background: #0f172a;
-
-    border: 1px solid rgba(34, 211, 238, 0.4);
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 0 30px rgba(34, 211, 238, 0.2);
-}
-
-#display {
-    width: 100%;
-
-    height: 65px;
-
-    margin-bottom: 20px;
-
-    padding: 10px;
-
-    font-size: 28px;
-
-    text-align: right;
-
-    color: white;
-
-    background: #020617;
-
-    border: 1px solid #334155;
-
-    border-radius: 10px;
-}
-
-.calculator-buttons {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 10px;
-}
-
-.calculator-buttons button {
-    height: 55px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #1e293b;
-
-    color: white;
-
-    font-size: 18px;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.calculator-buttons button:hover {
-    background: #0891b2;
-
-    box-shadow:
-        0 0 15px rgba(34, 211, 238, 0.4);
-}
-
-.calculator-buttons .equal {
-    grid-column: span 2;
-
-    background:
-        linear-gradient(
-            90deg,
-            #06b6d4,
-            #8b5cf6
-        );
-}
-
-
-/* ==========================================
-   FILE MANAGER
-   ========================================== */
-
-.files-section {
-    padding: 80px 7%;
+    padding: 40px 20px;
 
     text-align: center;
 
-    background: #030a1c;
-}
-
-.files-section .section-title {
-    color: #22d3ee;
-
-    letter-spacing: 4px;
-
-    font-size: 13px;
-}
-
-.files-section h2 {
-    font-size: 40px;
-
-    margin: 15px 0 30px;
-
-    color: white;
-}
-
-#fileInput {
-    display: block;
-
-    margin: 20px auto;
-
-    width: 100%;
-
-    max-width: 500px;
-
-    padding: 15px;
-
-    color: #cbd5e1;
-
     background: #0f172a;
-
-    border: 1px solid rgba(34, 211, 238, 0.3);
-
-    border-radius: 12px;
-
-    cursor: pointer;
-}
-
-#fileInput:hover {
-    border-color: #22d3ee;
-
-    box-shadow:
-        0 0 20px rgba(34, 211, 238, 0.25);
-}
-
-.file-list {
-    max-width: 800px;
-
-    margin: 30px auto;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-.file-item {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 16px 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15, 23, 42, 0.95),
-            rgba(15, 23, 42, 0.7)
-        );
 
     border: 1px solid rgba(34, 211, 238, 0.2);
 
-    border-radius: 14px;
+    border-radius: 20px;
 
-    color: white;
-
-    text-align: left;
+    min-height: 200px;
 }
 
-.file-item small {
-    display: block;
-
-    margin-top: 5px;
-
-    color: #94a3b8;
-}
-.file-item button {
-    border: none;
-
-    padding: 9px 12px;
-
-    margin-left: 5px;
-
-    border-radius: 8px;
-
-    background: #1e293b;
-
-    color: white;
-
-    cursor: pointer;
-}
-
-.file-item button:hover {
-    background: #0891b2;
-
-    box-shadow:
-        0 0 15px rgba(34, 211, 238, 0.4);
-}
-
-
-/* ==========================================
-   NOTES
-   ========================================== */
-
-.notes-section {
-    padding: 90px 7%;
-
-    text-align: center;
-
-    background: #020617;
-}
-
-.notes-section .section-title {
+.game-area h2 {
     color: #22d3ee;
 
-    letter-spacing: 4px;
-
-    font-size: 13px;
-}
-
-.notes-section h2 {
-    font-size: 40px;
-
-    margin: 15px 0 30px;
-
-    color: white;
-}
-
-#notesArea {
-    display: block;
-
-    width: 100%;
-
-    max-width: 800px;
-
-    height: 220px;
-
-    margin: 0 auto;
-
-    padding: 20px;
-
-    resize: vertical;
-
-    background: #0f172a;
-
-    color: white;
-
-    border: 1px solid rgba(34, 211, 238, 0.25);
-
-    border-radius: 16px;
-
-    outline: none;
-
-    font-size: 16px;
-
-    line-height: 1.6;
-
-    box-shadow:
-        0 0 25px rgba(34, 211, 238, 0.08);
-}
-
-#notesArea::placeholder {
-    color: #64748b;
-}
-
-#notesArea:focus {
-    border-color: #22d3ee;
-
-    box-shadow:
-        0 0 25px rgba(34, 211, 238, 0.25);
-}
-
-.notes-buttons {
-    margin-top: 20px;
-}
-
-.notes-buttons button {
-    padding: 12px 22px;
-
-    margin: 5px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #1e293b;
-
-    color: white;
-
-    font-size: 15px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.notes-buttons button:first-child {
-    background:
-        linear-gradient(
-            90deg,
-            #06b6d4,
-            #8b5cf6
-        );
-}
-
-.notes-buttons button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 20px rgba(34, 211, 238, 0.35);
-}
-
-#notesStatus {
-    margin-top: 15px;
-
-    color: #22d3ee;
-}
-/* ==========================================
-   ABOUT
-   ========================================== */
-
-.about {
-    padding: 100px 20px;
-
-    text-align: center;
-
-    background: #020617;
-}
-
-.about h2 {
     margin-bottom: 20px;
 }
 
-.about > p:last-child {
-    color: #94a3b8;
 
-    max-width: 900px;
-
-    margin: 25px auto 0;
-
-    line-height: 1.8;
-
-    text-align: justify;
-
-    padding: 0 20px;
-}
-
-
-/* ==========================================
-   FOOTER
-   ========================================== */
+/* FOOTER */
 
 footer {
     text-align: center;
@@ -666,250 +234,681 @@ footer {
 
     color: #64748b;
 
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 
-/* ==========================================
-   TABLET
-   ========================================== */
+/* TABLET */
 
 @media (max-width: 1000px) {
 
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-
-        gap: 25px;
+    .games-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .card {
-        min-height: 210px;
-    }
 }
-/* ==========================================
-   MOBILE
-   ========================================== */
 
-@media (max-width: 600px) {
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 500px) {
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
 
     .navbar {
         padding: 0 20px;
     }
 
-    .nav-links {
-        display: none;
-    }
+}
+/* GAME CONTROLS */
 
-    .hero {
-        min-height: 550px;
-
-        padding: 50px 20px;
-    }
-
-    .hero h1 {
-        font-size: 65px;
-    }
-
-    .hero h2 {
-        font-size: 25px;
-    }
-
-    .description {
-        font-size: 14px;
-    }
-
-    .tools-section {
-        padding: 70px 15px;
-    }
-
-    .tools-section > h2,
-    .about h2 {
-        font-size: 30px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-
-        gap: 20px;
-    }
-
-    .card {
-        min-height: 210px;
-
-        padding: 35px 20px;
-    }
-
-    .icon {
-        font-size: 50px;
-    }
-
-    .card h3 {
-        font-size: 21px;
-    }
-
-    .files-section h2,
-    .notes-section h2 {
-        font-size: 30px;
-
-        white-space: normal;
-    }
-
-    .file-item {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 12px;
-    }
+.tic-board {
+    width: 300px;
+    margin: 25px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
+.tic-board button {
+    width: 90px;
+    height: 90px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #22d3ee;
+    background: #020617;
+    border: 2px solid #22d3ee;
+    border-radius: 12px;
+    cursor: pointer;
+}
 
-/* ==========================================
-   SMALL MOBILE
-   ========================================== */
+.tic-board button:hover {
+    background: #0f172a;
+    box-shadow: 0 0 20px rgba(34,211,238,.5);
+}
 
-@media (max-width: 400px) {
+.game-btn {
+    padding: 12px 25px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .hero h1 {
-        font-size: 52px;
-    }
+.game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(34,211,238,.4);
+}
+/* ============================= */
+/* GAME UI STYLING */
+/* ============================= */
 
-    .hero h2 {
-        font-size: 22px;
-    }
+.game-area {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 50px 30px;
+    min-height: 350px;
+    text-align: center;
+}
 
-    .card {
+.game-area h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.game-area h3 {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.game-btn {
+    min-width: 150px;
+    padding: 16px 24px;
+    margin: 10px;
+    border: 1px solid #22d3ee;
+    border-radius: 14px;
+    background: #0f172a;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-btn:hover {
+    transform: translateY(-5px);
+    background: #0891b2;
+    box-shadow: 0 0 25px rgba(34,211,238,.5);
+}
+
+/* Rock Paper Scissors */
+
+.game-area .game-btn {
+    min-width: 180px;
+    min-height: 65px;
+    font-size: 20px;
+}
+
+#rps-result {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid rgba(34,211,238,.3);
+    border-radius: 15px;
+    background: #020617;
+    color: #22d3ee;
+    font-size: 22px;
+}
+
+/* Inputs */
+
+.game-input {
+    width: 250px;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 10px;
+    border: 1px solid #22d3ee;
+    background: #020617;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Tic Tac Toe */
+
+.tic-board {
+    width: 330px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.tic-board button {
+    height: 100px;
+    font-size: 42px;
+    font-weight: bold;
+    color: #22d3ee;
+    background: #020617;
+    border: 2px solid #22d3ee;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Memory */
+
+.memory-board {
+    width: 360px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.memory-board button {
+    height: 80px;
+    font-size: 30px;
+    border: 1px solid #22d3ee;
+    border-radius: 12px;
+    background: #020617;
+    cursor: pointer;
+}
+
+/* Quiz */
+
+.quiz-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+/* Brick Breaker */
+
+#brickCanvas {
+    display: block;
+    max-width: 100%;
+    margin: 30px auto;
+    background: #020617;
+    border: 2px solid #22d3ee;
+    border-radius: 12px;
+}
+
+/* Snake */
+
+#snakeCanvas {
+    display: block;
+    max-width: 100%;
+    margin: 30px auto;
+    background: #020617;
+    border: 2px solid #22d3ee;
+    border-radius: 12px;
+}
+
+/* Dice */
+
+#dice {
+    font-size: 100px;
+    margin: 30px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .game-area {
+        margin: 30px 15px;
         padding: 30px 15px;
     }
 
-    .icon {
-        font-size: 45px;
+    .quiz-options {
+        grid-template-columns: 1fr;
+    }
+
+    .tic-board {
+        width: 280px;
+    }
+
+    .memory-board {
+        width: 280px;
     }
 }
-.java-card {
-    text-decoration: none;
-    color: white;
-    display: block;
-}
-/* =================================
-   NEXAHUB CALCULATOR CARD
-   ================================= */
+/* NUMBER GUESSING GAME */
 
-.calculator-card {
-    min-height: 230px !important;
-    height: auto !important;
-
-    padding: 25px 20px !important;
-
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    overflow: hidden !important;
-    box-sizing: border-box !important;
+.number-game {
+    max-width: 650px;
+    margin: auto;
+    padding: 40px 25px;
+    background: linear-gradient(
+        145deg,
+        #0f172a,
+        #020617
+    );
+    border: 1px solid rgba(34,211,238,.35);
+    border-radius: 25px;
+    box-shadow: 0 0 35px rgba(34,211,238,.15);
 }
 
-.calculator-card .icon {
-    font-size: 45px;
-    margin-bottom: 8px;
-}
-
-.calculator-card h3 {
-    font-size: 22px;
-    margin: 5px 0;
-}
-
-.calculator-card p {
+.number-icon {
+    font-size: 80px;
     margin-bottom: 15px;
 }
 
-.calculator-card .calculator-box {
-    width: 100% !important;
-    max-width: 260px !important;
-
-    margin: 0 auto !important;
-    padding: 0 !important;
-
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-
-    box-sizing: border-box !important;
+.number-game h3 {
+    font-size: 30px;
+    color: #22d3ee;
+    margin-bottom: 15px;
 }
 
-.calculator-card #calculatorDisplay {
-    width: 100% !important;
-    height: 45px !important;
-
-    margin-bottom: 8px !important;
-    padding: 8px !important;
-
-    box-sizing: border-box !important;
-
-    background: #020617 !important;
-    color: #22d3ee !important;
-
-    border: 1px solid rgba(34, 211, 238, 0.3) !important;
-    border-radius: 8px !important;
-
-    text-align: right;
-    font-size: 19px;
+.game-description {
+    color: #cbd5e1;
+    font-size: 17px;
+    margin-bottom: 25px;
 }
 
-.calculator-card .calculator-buttons {
-    width: 100% !important;
-
-    display: grid !important;
-
-    grid-template-columns: repeat(4, 1fr) !important;
-
-    gap: 5px !important;
-
-    box-sizing: border-box !important;
+.game-input {
+    width: 280px;
+    height: 60px;
+    padding: 10px 20px;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 12px;
+    border: 2px solid #22d3ee;
+    background: #020617;
+    color: white;
+    outline: none;
 }
 
-.calculator-card .calculator-buttons button {
-    width: 100% !important;
-    height: 38px !important;
+.game-input:focus {
+    box-shadow: 0 0 25px rgba(34,211,238,.4);
+}
 
-    padding: 3px !important;
+.number-game .game-btn {
+    min-width: 220px;
+    height: 55px;
+    margin-top: 20px;
+}
 
-    border: none !important;
-    border-radius: 7px !important;
-
-    background: #1e293b !important;
-    color: white !important;
-
-    font-size: 14px !important;
+.guess-result {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 500px;
+    border-radius: 15px;
+    background: #020617;
+    border: 1px solid rgba(34,211,238,.3);
+    color: #22d3ee;
+    font-size: 21px;
     font-weight: bold;
+}
 
+.guess-info {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 25px 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.restart-btn {
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+}
+/* CLICK SPEED GAME */
+
+.speed-game {
+    max-width: 650px;
+    margin: auto;
+    padding: 45px 25px;
+    text-align: center;
+    background: linear-gradient(
+        145deg,
+        #0f172a,
+        #020617
+    );
+    border: 1px solid rgba(34,211,238,.35);
+    border-radius: 25px;
+    box-shadow: 0 0 35px rgba(34,211,238,.15);
+}
+
+.speed-icon {
+    font-size: 80px;
+    margin-bottom: 15px;
+}
+
+.speed-game h3 {
+    font-size: 30px;
+    color: #22d3ee;
+    margin-bottom: 12px;
+}
+
+.click-counter {
+    width: 180px;
+    height: 180px;
+    margin: 30px auto;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #020617;
+    border: 3px solid #22d3ee;
+    box-shadow: 0 0 35px rgba(34,211,238,.35);
+}
+
+.click-counter span {
+    font-size: 55px;
+    font-weight: bold;
+    color: #22d3ee;
+}
+
+.click-counter small {
+    color: #94a3b8;
+    letter-spacing: 3px;
+    margin-top: 5px;
+}
+
+.click-me-button {
+    width: 280px;
+    height: 80px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
     cursor: pointer;
-
-    box-sizing: border-box !important;
+    box-shadow: 0 0 25px rgba(34,211,238,.35);
+    transition: .15s;
 }
 
-.calculator-card .calculator-buttons button:hover {
-    background: #0891b2 !important;
+.click-me-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(34,211,238,.6);
 }
 
-.calculator-card .calculator-buttons .zero {
-    grid-column: span 2 !important;
+.click-me-button:active {
+    transform: scale(.95);
 }
 
-.calculator-card .calculator-buttons .equal {
+.speed-hint {
+    margin: 25px 0;
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.restart-btn {
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+}
+/* CAR RACING GAME */
+
+.racing-game {
+    max-width: 700px;
+    margin: auto;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.racing-game h3 {
+    font-size: 30px;
+    color: #22d3ee;
+    margin-bottom: 15px;
+}
+
+.race-score {
+    font-size: 20px;
+    color: #facc15;
+    margin-bottom: 25px;
+}
+
+.race-track {
+    position: relative;
+    width: 360px;
+    height: 500px;
+    margin: auto;
+    overflow: hidden;
+    border: 4px solid #334155;
+    border-radius: 25px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #1e293b 0px,
+            #1e293b 45px,
+            #334155 45px,
+            #334155 90px
+        );
+    box-shadow: 0 0 35px rgba(34,211,238,.25);
+}
+
+/* Road center */
+
+.race-track::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(
+        to bottom,
+        white 0px,
+        white 40px,
+        transparent 40px,
+        transparent 80px
+    );
+    opacity: .6;
+}
+
+/* Player Car */
+
+#car {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 55px;
+    z-index: 5;
+    transition: left .2s;
+    filter: drop-shadow(0 0 10px #22d3ee);
+}
+
+/* Obstacle */
+
+#obstacle {
+    position: absolute;
+    top: 70px;
+    left: 25%;
+    font-size: 45px;
+    z-index: 4;
+    animation: obstacleMove 2s linear infinite;
+}
+
+@keyframes obstacleMove {
+
+    0% {
+        top: -60px;
+    }
+
+    100% {
+        top: 520px;
+    }
+
+}
+
+.race-controls {
+    margin-top: 25px;
+}
+
+.race-controls .game-btn {
+    min-width: 150px;
+}
+
+.race-hint {
+    margin: 20px;
+    color: #94a3b8;
+}
+
+.restart-btn {
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+}
+
+@media (max-width:600px) {
+
+    .race-track {
+        width: 300px;
+        height: 450px;
+    }
+
+}
+/* ======================================
+   PING PONG GAME
+====================================== */
+
+.pong-game {
+    max-width: 700px;
+    margin: auto;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.pong-game h3 {
+    font-size: 30px;
+    color: #22d3ee;
+    margin-bottom: 15px;
+}
+
+.pong-score {
+    font-size: 20px;
+    color: #facc15;
+    margin-bottom: 25px;
+}
+
+.pong-area {
+    position: relative;
+    width: 500px;
+    height: 320px;
+    max-width: 100%;
+    margin: 20px auto 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 49.5%,
+            rgba(255,255,255,.5) 49.5%,
+            rgba(255,255,255,.5) 50.5%,
+            transparent 50.5%
+        ),
+        #020617;
+
+    border: 3px solid #22d3ee;
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 30px rgba(34,211,238,.25);
+}
+
+.pong-area::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    width: 12px;
+    height: 100px;
+    transform: translateY(-50%);
+    background: #22d3ee;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #22d3ee;
+}
+
+.pong-area::after {
+    content: "";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    width: 12px;
+    height: 100px;
+    transform: translateY(-50%);
+    background: #8b5cf6;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #8b5cf6;
+}
+
+#pongBall {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    font-size: 30px;
+
+    transform: translate(-50%, -50%);
+
+    transition: transform .25s ease;
+
+    z-index: 5;
+}
+
+.pong-hint {
+    color: #94a3b8;
+    margin: 20px;
+}
+
+.restart-btn {
     background: linear-gradient(
         90deg,
         #06b6d4,
         #8b5cf6
-    ) !important;
+    );
 }
 
-/* Calculator toggle: closed by default, opens only when card has "active" */
-.calculator-card .calculator-box {
-    display: none !important;
+@media (max-width:600px) {
+
+    .pong-area {
+        height: 280px;
+    }
+
+}
+.dice-game {
+    max-width: 600px;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
 }
 
-.calculator-card.active .calculator-box {
-    display: block !important;
+.dice-game #dice {
+    font-size: 120px;
+    margin: 30px;
+    transition: 0.3s;
+}
+
+.dice-game h3 {
+    font-size: 30px;
+    color: #22d3ee;
+    margin-bottom: 20px;
+}
+
+#diceResult {
+    font-size: 22px;
+    color: #cbd5e1;
+    margin: 25px;
 }
