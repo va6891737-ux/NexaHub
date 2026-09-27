@@ -1,0 +1,915 @@
+/* ==========================================
+   NEXAHUB - MAIN STYLE
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
+}
+
+
+/* ==========================================
+   NAVBAR
+   ========================================== */
+
+.navbar {
+    height: 75px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 7%;
+
+    background: rgba(2, 6, 23, 0.96);
+
+    border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+
+    color: #22d3ee;
+
+    text-shadow: 0 0 15px #22d3ee;
+}
+
+.logo span {
+    color: #a78bfa;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.25s;
+}
+
+.nav-links a:hover {
+    color: #22d3ee;
+
+    text-shadow:
+        0 0 10px #22d3ee;
+}
+
+
+/* ==========================================
+   HERO
+   ========================================== */
+
+.hero {
+    min-height: 650px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(37, 99, 235, 0.35),
+            transparent 55%
+        );
+}
+
+.small-title {
+    letter-spacing: 5px;
+
+    font-size: 14px;
+
+    color: #c4b5fd;
+
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: clamp(70px, 12vw, 150px);
+
+    line-height: 1;
+
+    color: #22d3ee;
+
+    text-shadow:
+        0 0 15px #22d3ee,
+        0 0 40px rgba(34, 211, 238, 0.5);
+}
+
+.hero h1 span {
+    color: #a78bfa;
+}
+
+.hero h2 {
+    margin-top: 30px;
+
+    font-size: 32px;
+}
+
+.description {
+    max-width: 650px;
+
+    margin: 20px auto;
+
+    color: #cbd5e1;
+
+    line-height: 1.7;
+}
+
+.hero button {
+    margin-top: 25px;
+
+    padding: 15px 30px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #8b5cf6
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(34, 211, 238, 0.4);
+
+    transition: 0.3s;
+}
+
+.hero button:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 35px rgba(34, 211, 238, 0.7);
+}
+
+
+/* ==========================================
+   TOOLS SECTION
+   ========================================== */
+
+.tools-section {
+    padding: 100px 6%;
+
+    text-align: center;
+
+    background: #030a1c;
+}
+
+.section-title {
+    color: #22d3ee;
+
+    letter-spacing: 4px;
+
+    font-size: 13px;
+}
+
+.tools-section > h2,
+.about h2 {
+    font-size: 40px;
+
+    margin: 15px 0 50px;
+}
+
+
+/* ==========================================
+   TOOL CARDS
+   3 CARDS PER ROW
+   ========================================== */
+
+.cards {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+}
+
+
+/* ==========================================
+   CARD
+   ========================================== */
+
+.card {
+    min-height: 230px;
+
+    padding: 45px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 23, 42, 0.98),
+            rgba(15, 23, 42, 0.75)
+        );
+
+    border: 1px solid rgba(34, 211, 238, 0.18);
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+
+    border-color: #22d3ee;
+
+    box-shadow:
+        0 0 30px rgba(34, 211, 238, 0.3);
+}
+
+.icon {
+    font-size: 55px;
+
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-size: 23px;
+
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #94a3b8;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   CALCULATOR
+   ========================================== */
+
+.calculator-box {
+    display: none;
+
+    max-width: 350px;
+
+    margin: 50px auto;
+
+    padding: 25px;
+
+    background: #0f172a;
+
+    border: 1px solid rgba(34, 211, 238, 0.4);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+#display {
+    width: 100%;
+
+    height: 65px;
+
+    margin-bottom: 20px;
+
+    padding: 10px;
+
+    font-size: 28px;
+
+    text-align: right;
+
+    color: white;
+
+    background: #020617;
+
+    border: 1px solid #334155;
+
+    border-radius: 10px;
+}
+
+.calculator-buttons {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.calculator-buttons button {
+    height: 55px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1e293b;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.calculator-buttons button:hover {
+    background: #0891b2;
+
+    box-shadow:
+        0 0 15px rgba(34, 211, 238, 0.4);
+}
+
+.calculator-buttons .equal {
+    grid-column: span 2;
+
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #8b5cf6
+        );
+}
+
+
+/* ==========================================
+   FILE MANAGER
+   ========================================== */
+
+.files-section {
+    padding: 80px 7%;
+
+    text-align: center;
+
+    background: #030a1c;
+}
+
+.files-section .section-title {
+    color: #22d3ee;
+
+    letter-spacing: 4px;
+
+    font-size: 13px;
+}
+
+.files-section h2 {
+    font-size: 40px;
+
+    margin: 15px 0 30px;
+
+    color: white;
+}
+
+#fileInput {
+    display: block;
+
+    margin: 20px auto;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    padding: 15px;
+
+    color: #cbd5e1;
+
+    background: #0f172a;
+
+    border: 1px solid rgba(34, 211, 238, 0.3);
+
+    border-radius: 12px;
+
+    cursor: pointer;
+}
+
+#fileInput:hover {
+    border-color: #22d3ee;
+
+    box-shadow:
+        0 0 20px rgba(34, 211, 238, 0.25);
+}
+
+.file-list {
+    max-width: 800px;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.file-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 16px 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 23, 42, 0.95),
+            rgba(15, 23, 42, 0.7)
+        );
+
+    border: 1px solid rgba(34, 211, 238, 0.2);
+
+    border-radius: 14px;
+
+    color: white;
+
+    text-align: left;
+}
+
+.file-item small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #94a3b8;
+}
+.file-item button {
+    border: none;
+
+    padding: 9px 12px;
+
+    margin-left: 5px;
+
+    border-radius: 8px;
+
+    background: #1e293b;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.file-item button:hover {
+    background: #0891b2;
+
+    box-shadow:
+        0 0 15px rgba(34, 211, 238, 0.4);
+}
+
+
+/* ==========================================
+   NOTES
+   ========================================== */
+
+.notes-section {
+    padding: 90px 7%;
+
+    text-align: center;
+
+    background: #020617;
+}
+
+.notes-section .section-title {
+    color: #22d3ee;
+
+    letter-spacing: 4px;
+
+    font-size: 13px;
+}
+
+.notes-section h2 {
+    font-size: 40px;
+
+    margin: 15px 0 30px;
+
+    color: white;
+}
+
+#notesArea {
+    display: block;
+
+    width: 100%;
+
+    max-width: 800px;
+
+    height: 220px;
+
+    margin: 0 auto;
+
+    padding: 20px;
+
+    resize: vertical;
+
+    background: #0f172a;
+
+    color: white;
+
+    border: 1px solid rgba(34, 211, 238, 0.25);
+
+    border-radius: 16px;
+
+    outline: none;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    box-shadow:
+        0 0 25px rgba(34, 211, 238, 0.08);
+}
+
+#notesArea::placeholder {
+    color: #64748b;
+}
+
+#notesArea:focus {
+    border-color: #22d3ee;
+
+    box-shadow:
+        0 0 25px rgba(34, 211, 238, 0.25);
+}
+
+.notes-buttons {
+    margin-top: 20px;
+}
+
+.notes-buttons button {
+    padding: 12px 22px;
+
+    margin: 5px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1e293b;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.notes-buttons button:first-child {
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #8b5cf6
+        );
+}
+
+.notes-buttons button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 20px rgba(34, 211, 238, 0.35);
+}
+
+#notesStatus {
+    margin-top: 15px;
+
+    color: #22d3ee;
+}
+/* ==========================================
+   ABOUT
+   ========================================== */
+
+.about {
+    padding: 100px 20px;
+
+    text-align: center;
+
+    background: #020617;
+}
+
+.about h2 {
+    margin-bottom: 20px;
+}
+
+.about > p:last-child {
+    color: #94a3b8;
+
+    max-width: 900px;
+
+    margin: 25px auto 0;
+
+    line-height: 1.8;
+
+    text-align: justify;
+
+    padding: 0 20px;
+}
+
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+footer {
+    text-align: center;
+
+    padding: 30px;
+
+    color: #64748b;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* ==========================================
+   TABLET
+   ========================================== */
+
+@media (max-width: 1000px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+    }
+
+    .card {
+        min-height: 210px;
+    }
+}
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        min-height: 550px;
+
+        padding: 50px 20px;
+    }
+
+    .hero h1 {
+        font-size: 65px;
+    }
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .tools-section {
+        padding: 70px 15px;
+    }
+
+    .tools-section > h2,
+    .about h2 {
+        font-size: 30px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .card {
+        min-height: 210px;
+
+        padding: 35px 20px;
+    }
+
+    .icon {
+        font-size: 50px;
+    }
+
+    .card h3 {
+        font-size: 21px;
+    }
+
+    .files-section h2,
+    .notes-section h2 {
+        font-size: 30px;
+
+        white-space: normal;
+    }
+
+    .file-item {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+   ========================================== */
+
+@media (max-width: 400px) {
+
+    .hero h1 {
+        font-size: 52px;
+    }
+
+    .hero h2 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 30px 15px;
+    }
+
+    .icon {
+        font-size: 45px;
+    }
+}
+.java-card {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+/* =================================
+   NEXAHUB CALCULATOR CARD
+   ================================= */
+
+.calculator-card {
+    min-height: 230px !important;
+    height: auto !important;
+
+    padding: 25px 20px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.calculator-card .icon {
+    font-size: 45px;
+    margin-bottom: 8px;
+}
+
+.calculator-card h3 {
+    font-size: 22px;
+    margin: 5px 0;
+}
+
+.calculator-card p {
+    margin-bottom: 15px;
+}
+
+.calculator-card .calculator-box {
+    width: 100% !important;
+    max-width: 260px !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    box-sizing: border-box !important;
+}
+
+.calculator-card #calculatorDisplay {
+    width: 100% !important;
+    height: 45px !important;
+
+    margin-bottom: 8px !important;
+    padding: 8px !important;
+
+    box-sizing: border-box !important;
+
+    background: #020617 !important;
+    color: #22d3ee !important;
+
+    border: 1px solid rgba(34, 211, 238, 0.3) !important;
+    border-radius: 8px !important;
+
+    text-align: right;
+    font-size: 19px;
+}
+
+.calculator-card .calculator-buttons {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: repeat(4, 1fr) !important;
+
+    gap: 5px !important;
+
+    box-sizing: border-box !important;
+}
+
+.calculator-card .calculator-buttons button {
+    width: 100% !important;
+    height: 38px !important;
+
+    padding: 3px !important;
+
+    border: none !important;
+    border-radius: 7px !important;
+
+    background: #1e293b !important;
+    color: white !important;
+
+    font-size: 14px !important;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-sizing: border-box !important;
+}
+
+.calculator-card .calculator-buttons button:hover {
+    background: #0891b2 !important;
+}
+
+.calculator-card .calculator-buttons .zero {
+    grid-column: span 2 !important;
+}
+
+.calculator-card .calculator-buttons .equal {
+    background: linear-gradient(
+        90deg,
+        #06b6d4,
+        #8b5cf6
+    ) !important;
+}
+
+/* Calculator toggle: closed by default, opens only when card has "active" */
+.calculator-card .calculator-box {
+    display: none !important;
+}
+
+.calculator-card.active .calculator-box {
+    display: block !important;
+}
